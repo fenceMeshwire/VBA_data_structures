@@ -4,9 +4,8 @@ Option Explicit
 ' ______________________________________________________________________
 Sub create_random_data()
 
-Dim intRandomSuccess%, intRandomRisk%, intRandomCost%
+Dim intRandomSuccess%, intRandomRisk%, intRandomGain%
 Dim intRow%, intRowMax%, intCol%, intColMax%
-Dim strSuccess$
 Dim varHeader, varOptions As Variant
 
 varHeader = [{"Option", "Chance", "Risk", "Gain"}]
@@ -29,8 +28,8 @@ For intCol% = 2 To intColMax%
       intRandomRisk% = Application.WorksheetFunction.RandBetween(20, 90)
       Data.Cells(intRow, intCol).Value = intRandomRisk%
     ElseIf intCol% = 4 Then
-      intRandomCost% = flatten_to_full_hundreds(Application.WorksheetFunction.RandBetween(1000, 5000))
-      Data.Cells(intRow, intCol).Value = intRandomCost%
+      intRandomGain% = flatten_to_full_hundreds(Application.WorksheetFunction.RandBetween(1000, 5000))
+      Data.Cells(intRow, intCol).Value = intRandomGain%
     End If
   Next intRow
   
