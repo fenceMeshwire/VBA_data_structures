@@ -1,7 +1,7 @@
 Option Explicit
 
 ' ______________________________________________________________________
-Sub create_data_for_chart()
+Sub create_random_data()
 
 Dim intRandomSuccess%, intRandomRisk%, intRandomCost%
 Dim intRow%, intRowMax%, intCol%, intColMax%
