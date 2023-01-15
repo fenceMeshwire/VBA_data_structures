@@ -1,5 +1,6 @@
 Option Explicit
 
+' Notes: Create two tables and rename them as follows: data and visualization
 ' ______________________________________________________________________
 Sub create_random_data()
 
