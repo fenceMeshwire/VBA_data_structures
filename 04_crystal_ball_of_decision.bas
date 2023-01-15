@@ -1,6 +1,6 @@
 Option Explicit
 
-' Notes: Create two tables and rename them as follows: data and visualization
+' Notes: Create two tables and rename them as follows: Data and Visualization (in the VBA Editor).
 ' ______________________________________________________________________
 Sub create_random_data()
 
