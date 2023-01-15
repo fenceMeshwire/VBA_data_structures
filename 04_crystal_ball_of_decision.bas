@@ -116,8 +116,8 @@ varTarget(3) = Data.Cells(intRow%, 1).Value
 get_best_options = varTarget
 
 End Function
-' ______________________________________________________________________
 
+' ______________________________________________________________________
 Function assign_results(ByRef varResults As Variant)
 
 Visualization.Cells(1, 1).Value = "Highest Chance:"
