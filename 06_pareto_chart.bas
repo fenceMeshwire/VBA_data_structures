@@ -19,7 +19,7 @@ varDesignation = [{"Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", 
 
 With Data
   .UsedRange.Rows.Clear
-  .Cells(1, 1).Value = "Category"
+  .Cells(1, 1).Value = "Error Category"
   .Cells(1, 2).Value = "Number of Errors"
   For lngRow& = LBound(varDesignation) To UBound(varDesignation)
     .Cells(lngRow& + 1, 1).Value = varDesignation(lngRow&)
@@ -51,7 +51,7 @@ Set rngData = Data.Range("A1:B" & lngRowMax&)
 
 On Error Resume Next
 With chrt
-    ' Set data source, which creates an error, which is handled by the error handler above.
+  ' Set data source, which creates an error, which is handled by the error handler above.
   .SetSourceData Source:=rngData
   ' Title of the diagram
   .HasTitle = True
