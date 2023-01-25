@@ -2,7 +2,7 @@ Option Explicit
 
 ' Create two charts: Data and Visualization.
 ' __________________________________________________________________________________________
-Sub generate_data_and_pareto()
+Sub generate_data_and_vertical_bar_chart()
 
 Call generate_data
 Call create_grouped_vertical_bar_chart
