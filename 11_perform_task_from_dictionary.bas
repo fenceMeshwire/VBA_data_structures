@@ -25,7 +25,7 @@ End Sub
 ' _______________________________________________________________________________________
 Public Function get_PROP(ByRef wkSheet As Worksheet) As Variant 
 
-' This will create a list of duplicates, if there are any duplicates.
+' This will create a list of unique items:
 
 Dim intColPROP As Integer
 
@@ -62,7 +62,8 @@ End Function
 ' _______________________________________________________________________________________
 Public Function get_dict_PROP(ByRef wkSheet As Worksheet, ByRef varPROP As Variant) As Object
 
-' This will create a dictionary containing each property, counting the number of duplicates, if there are any duplicates.
+' This will create a dictionary containing a key for each property, counting the number of occurence.
+' dict_PROP = {'AB21':3, 'XY31':2}
 
 Dim intField As Integer, intCounter As Integer
 Dim intCounterCheck As Integer, intCounterVar As Integer, intCounterVisible As Integer
@@ -75,7 +76,7 @@ Dim varVisibleRows As Variant, varPROPcheck As Variant
 
 Set dict_PROP = CreateObject("Scripting.Dictionary")
 
-intField = 1
+intField = 1 ' Target column of PROP value
 
 On Error GoTo restore_screen_update
 Application.ScreenUpdating = False
