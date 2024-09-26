@@ -1,0 +1,116 @@
+Option Explicit
+
+' DESCRIPTION: Spreadsheet with ISO 3166-4 country codes, row-wise accumulation of country codes
+' like "EST, LVA, LTU" in column no. 6, split and sort operations required (worksheet name = "data").
+' RESULT: Spreadsheet of sorted and unique items (worksheet name = "output")
+
+' ________________________________________________________________
+' Global
+Dim varCountries As Variant
+
+' ________________________________________________________________
+Sub generate_country_list()
+' Local
+Dim lngRow As Long, lngRowMax As Long
+Dim strCountries As String
+Dim varSplit As Variant, varSortedCountries As Variant
+Dim wksData As Worksheet, wksOutput As Worksheet
+
+Set wksData = data
+Set wksOutput = output
+
+ReDim varCountries(0)
+
+With data
+
+  lngRowMax = .Cells(.Rows.Count, 1).End(xlUp).Row
+  
+  For lngRow = 2 To lngRowMax
+    strCountries = .Cells(lngRow, 6).Value
+    varSplit = Split(strCountries)
+    Call get_single_countries(varSplit)
+  Next lngRow
+  
+  Call delete_last_empty_array_entry(varCountries)
+  varSortedCountries = sort_array_a_to_z(varCountries)
+  Call write_sorted_array_to_sheet(varSortedCountries, wksOutput)
+  
+End With
+
+End Sub
+
+' ________________________________________________________________
+Public Function get_single_countries(varSplit As Variant)
+' Local
+Dim lngCounter As Long
+Dim strCountry As String
+
+For lngCounter = LBound(varSplit) To UBound(varSplit)
+  strCountry = varSplit(lngCounter)
+  If strCountry <> "" Then Call store_countries(varCountries, strCountry)
+Next lngCounter
+
+End Function
+
+' ________________________________________________________________
+Public Function store_countries(varCountries As Variant, strCountry As String)
+' Local
+Dim lngCounter As Long
+
+lngCounter = UBound(varCountries)
+
+If InStr(strCountry, ",") > 0 Then strCountry = Replace(strCountry, ",", "")
+
+If Not IsNumeric(Application.Match(strCountry, varCountries, 0)) Then ' No duplicates
+  varCountries(lngCounter) = strCountry
+  ReDim Preserve varCountries(lngCounter)
+  ReDim Preserve varCountries(lngCounter + 1) ' Add empty slot in array for the next value
+End If
+
+End Function
+
+' ________________________________________________________________
+Public Function delete_last_empty_array_entry(varCountries As Variant)
+' Delete the last created empty slot of the current array.
+If IsEmpty(varCountries(UBound(varCountries))) Then
+  ReDim Preserve varCountries(UBound(varCountries) - 1)
+End If
+
+End Function
+
+' ________________________________________________________________
+Public Function sort_array_a_to_z(varCountries As Variant)
+' Local
+Dim lngA As Long, lngB As Long
+Dim strPlaceholder As String
+
+For lngA = LBound(varCountries) To UBound(varCountries) - 1
+  For lngB = lngA + 1 To UBound(varCountries)
+    If UCase(varCountries(lngA)) > UCase(varCountries(lngB)) Then
+      strPlaceholder = varCountries(lngB)
+      varCountries(lngB) = varCountries(lngA)
+      varCountries(lngA) = strPlaceholder
+    End If
+  Next lngB
+Next lngA
+
+sort_array_a_to_z = varCountries
+
+End Function
+
+' ________________________________________________________________
+Public Function write_sorted_array_to_sheet(varSortedCountries As Variant, _
+  wksOutput As Worksheet)
+
+Dim lngCounter As Long, lngRowFree As Long
+
+With wksOutput
+  .Cells(1, 1).Value = "Country_Code"
+  lngRowFree = .Cells(.Rows.Count, 1).End(xlUp).Row + 1
+  For lngCounter = LBound(varSortedCountries) To UBound(varSortedCountries)
+    .Cells(lngRowFree, 1).Value = varSortedCountries(lngCounter)
+    lngRowFree = lngRowFree + 1
+  Next lngCounter
+End With
+
+End Function
