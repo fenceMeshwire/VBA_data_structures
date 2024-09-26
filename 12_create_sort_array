@@ -1,6 +1,6 @@
 Option Explicit
 
-' DESCRIPTION: Spreadsheet with ISO 3166-4 country codes, row-wise accumulation of country codes
+' DESCRIPTION: Spreadsheet with ISO 3166-3 country codes, row-wise accumulation of country codes
 ' like "EST, LVA, LTU" in column no. 6, split and sort operations required (worksheet name = "data").
 ' RESULT: Spreadsheet of sorted and unique items (worksheet name = "output")
 
